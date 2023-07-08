@@ -15,6 +15,8 @@ import ProductDetails from "./screens/ProductDetails";
 import CartScreen from "./screens/cartScreen.jsx";
 import {Provider} from 'react-redux';
 import store from './store.js';
+import LoginScreen from "./screens/loginScreen.jsx";
+import RegisterScreen from "./screens/RegisterScreen";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -22,6 +24,8 @@ const router = createBrowserRouter(
       <Route index={true} path="/" element={<HomeScreen/>} />
       <Route  path="/product/:id" element={<ProductDetails/>} />
       <Route path="/cart" element={<CartScreen/>} />
+      <Route path="/sign-in" element={<LoginScreen/>} />
+      <Route path="/register" element={<RegisterScreen/>} />
     </Route>
   )
 );
