@@ -72,7 +72,6 @@ const logoutUser = asyncHandler(async (req, res) => {
 // Private access
 const getUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
-
   if (user) {
     res.status(200).json({
       _id: user._id,
@@ -91,6 +90,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
 //Private access
 const updateProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
+  console.log(req.body);
   if (user) {
     user.name = req.body.name || user.name;
     user.email = req.body.email || user.email;
