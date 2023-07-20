@@ -13,17 +13,13 @@ import { fileURLToPath } from "url";
 connectDB();
 const app = express();
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __dirname = path.resolve();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-const port = process.env.PORT || 5000;;
-import cors from "cors";
-
-app.use(cors());
+const port = process.env.PORT || 5000;
 
 app.use("/api/products", productRoutes);
 app.use("/api/users", userRoutes);
@@ -32,9 +28,6 @@ app.use("/api/orders", orderRoutes);
 app.get("/api/config/paypal", (req, res, next) =>
   res.send({ clientId: process.env.PAYPAL_CLIENT_ID })
 );
-
-app.use(notFound);
-app.use(errorHandler);
 
 if(process.env.NODE_ENV ==='production'){
    app.use(express.static(path.join(__dirname, '/frontend/build')));
@@ -48,6 +41,9 @@ else{
   });
 }
 
-app.listen({ port }, () => {
+app.use(notFound);
+app.use(errorHandler);
+
+app.listen(port, () => {
   console.log(`${port} listening on`);
 });
