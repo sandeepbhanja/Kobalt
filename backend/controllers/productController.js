@@ -6,7 +6,6 @@ import Product from "../models/productModel.js";
 //@route GET/api/products
 //@access Public
 const getProducts = asyncHandler(async (req, res) => {
-  console.log(req.query.keyword);
   const keyword = req.query.keyword
     ? { name: new RegExp(req.query.keyword, "i") }
     : {};
@@ -49,10 +48,10 @@ const createProduct = asyncHandler(async (req, res) => {
   });
   try {
     const createdProduct = await product.save();
+    res.status(200).json(createdProduct);
   } catch (e) {
     console.log(e);
   }
-  res.status(200).json(createdProduct);
 });
 
 const updateProduct = asyncHandler(async (req, res) => {

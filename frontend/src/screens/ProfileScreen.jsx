@@ -40,9 +40,8 @@ const ProfileScreen = () => {
           email,
           password,
         };
-        const res = await updateProfile(data);
-        console.log(res);
-        dispatch(setCredentials(...res));
+        await updateProfile(data);
+        dispatch(setCredentials(data));
         toast.success("Profile updated successfully");
       } catch (e) {
         toast.error(e?.data?.message || e.error);

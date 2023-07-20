@@ -8,22 +8,22 @@ import userRoutes from "./routes/userRoutes.js";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import orderRoutes from "./routes/orderRoutes.js";
-
+import path from 'path';
+import { fileURLToPath } from "url";
 connectDB();
 const app = express();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-const port = 5000;
+const port = process.env.PORT || 5000;;
 import cors from "cors";
 
 app.use(cors());
-
-app.get("/", (req, res) => {
-  res.send("API is running");
-});
 
 app.use("/api/products", productRoutes);
 app.use("/api/users", userRoutes);
@@ -35,6 +35,18 @@ app.get("/api/config/paypal", (req, res, next) =>
 
 app.use(notFound);
 app.use(errorHandler);
+
+if(process.env.NODE_ENV ==='production'){
+   app.use(express.static(path.join(__dirname, '/frontend/build')));
+   app.get('*',(req,res)=>{
+    res.sendFile(path.resolve(__dirname,'frontend','build','index.html'));
+   })
+}
+else{
+  app.get("/", (req, res) => {
+    res.send("API is running");
+  });
+}
 
 app.listen({ port }, () => {
   console.log(`${port} listening on`);
