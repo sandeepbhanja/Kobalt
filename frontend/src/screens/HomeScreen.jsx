@@ -4,6 +4,7 @@ import { useGetProductsQuery } from "../slices/productsApiSlice";
 import Loader from "../components/loader";
 import Message from "../components/message";
 import { useParams } from "react-router-dom";
+import ProductCarousel from '../components/ProductCarousel';
 
 const HomeScreen = () => {
   const {keyword} = useParams();
@@ -16,6 +17,7 @@ const HomeScreen = () => {
         <Message variant="danger" children={error.err} />
       ) : (
         <>
+        <ProductCarousel/>
           <h1>Latest Products</h1>
           <Row>
             {data.map((product) => (

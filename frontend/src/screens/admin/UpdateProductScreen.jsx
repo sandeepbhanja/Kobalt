@@ -58,7 +58,7 @@ const UpdateProductScreen = () => {
         countInStock,
         description,
       };
-      await updateProduct(updatedProduct);
+      const res = await updateProduct(updatedProduct);
       toast.success("Product updated successfully");
       refetch();
       navigate("/admin/productlist");

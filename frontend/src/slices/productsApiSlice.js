@@ -6,7 +6,7 @@ export const productApiSlice = apiSlice.injectEndpoints({
     getProducts: builders.query({
       query: (keyword) => ({
         url: PRODUCTS_URL,
-        params: {keyword}
+        params: { keyword },
       }),
       keepUnusedDataFor: 5,
     }),
@@ -36,30 +36,34 @@ export const productApiSlice = apiSlice.injectEndpoints({
     }),
 
     uploadImage: builders.mutation({
-      query:(data)=>({
-        url:`${UPLOADS_URL}`,
+      query: (data) => ({
+        url: `${UPLOADS_URL}`,
         method: "POST",
         body: data,
-      })
+      }),
     }),
 
     deleteProduct: builders.mutation({
-      query:(id)=>({
-        url:`${PRODUCTS_URL}/${id}`,
-        method:'DELETE',
+      query: (id) => ({
+        url: `${PRODUCTS_URL}/${id}`,
+        method: "DELETE",
       }),
     }),
 
     createReview: builders.mutation({
-      query: (data)=>({
-        url:`${PRODUCTS_URL}/${data._id}/reviews`,
-        method: 'POST',
+      query: (data) => ({
+        url: `${PRODUCTS_URL}/${data._id}/reviews`,
+        method: "POST",
         body: data,
       }),
-      invalidatesTags: ['Product']
+      invalidatesTags: ["Product"],
+    }),
+    getTopProducts: builders.query({
+      query: () => `${PRODUCTS_URL}/top`,
+      keepUnusedDataFor: 5,
     }),
   }),
 });
 
-export const {useGetProductsQuery, useCreateProductMutation, useUpdateProductMutation} = productApiSlice;
+export const {useGetTopProductsQuery,useGetProductsQuery, useCreateProductMutation, useUpdateProductMutation} = productApiSlice;
 export const {useCreateReviewMutation,useDeleteProductMutation , useUploadImageMutation ,useGetProductDetailsQuery} = productApiSlice;
